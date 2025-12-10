@@ -21,6 +21,7 @@ const App: React.FC = () => {
     const [lang, setLang] = useState<Language>('en');
     const [isDark, setIsDark] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [initialCheckDone, setInitialCheckDone] = useState(false);
 
     // Auth States
     const [authMode, setAuthMode] = useState<'login' | 'signup' | 'forgot'>('login');
@@ -40,22 +41,28 @@ const App: React.FC = () => {
     // Initial Load
     useEffect(() => {
         const initApp = async () => {
-            const storedLang = localStorage.getItem('bhumi_lang') as Language;
-            if (storedLang) setLang(storedLang);
+            try {
+                const storedLang = localStorage.getItem('bhumi_lang') as Language;
+                if (storedLang) setLang(storedLang);
 
-            const currentUser = await api.auth.getCurrentUser();
-            if (currentUser) {
-                setUser(currentUser);
-                setView('dashboard');
-            }
+                const storedTheme = localStorage.getItem('bhumi_theme');
+                if (storedTheme === 'dark') {
+                    setIsDark(true);
+                    document.documentElement.classList.add('dark');
+                } else {
+                    setIsDark(false);
+                    document.documentElement.classList.remove('dark');
+                }
 
-            const storedTheme = localStorage.getItem('bhumi_theme');
-            if (storedTheme === 'dark') {
-                setIsDark(true);
-                document.documentElement.classList.add('dark');
-            } else {
-                setIsDark(false);
-                document.documentElement.classList.remove('dark');
+                const currentUser = await api.auth.getCurrentUser();
+                if (currentUser) {
+                    setUser(currentUser);
+                    setView('dashboard');
+                }
+            } catch (error) {
+                console.error("Initialization error:", error);
+            } finally {
+                setInitialCheckDone(true);
             }
         };
         initApp();
@@ -82,6 +89,7 @@ const App: React.FC = () => {
                 setView('dashboard');
             } catch (e) {
                 console.error("Login failed", e);
+                alert("Login failed. Please try again.");
             } finally {
                 setLoading(false);
             }
@@ -144,6 +152,18 @@ const App: React.FC = () => {
 
     const goBack = () => setView('dashboard');
     const t = translations[lang];
+
+    // Show loading spinner while checking auth status
+    if (!initialCheckDone) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
+                 <div className="flex flex-col items-center gap-4 animate-pulse">
+                    <BhumiLogo size={60} />
+                    <div className="text-bhumi-green font-bold">Loading Bhumi...</div>
+                 </div>
+            </div>
+        );
+    }
 
     // Language Selection Screen
     if (view === 'language') {

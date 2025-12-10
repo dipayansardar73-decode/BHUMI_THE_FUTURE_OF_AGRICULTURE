@@ -1,130 +1,76 @@
-import { User } from '../types';
-import { auth, db } from './firebase';
-import { 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged,
-    updateProfile as updateAuthProfile
-} from 'firebase/auth';
-import { 
-    doc, 
-    setDoc, 
-    getDoc, 
-    updateDoc 
-} from 'firebase/firestore';
 
-// API Service wrapping Firebase functionality
+import { User } from '../types';
+
+// Simulating a delay to mimic real server latency
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Database Keys
+const DB_KEYS = {
+    USER: 'bhumi_user',
+    AUTH_TOKEN: 'bhumi_auth_token',
+    THEME: 'bhumi_theme',
+    LANG: 'bhumi_lang'
+};
+
+// Mock Database Implementation (Using LocalStorage)
 export const api = {
     auth: {
         async login(email: string, password: string): Promise<User> {
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                // Fetch extra user details from Firestore
-                const docRef = doc(db, "users", userCredential.user.uid);
-                const docSnap = await getDoc(docRef);
-                
-                if (docSnap.exists()) {
-                    return { ...docSnap.data(), email: userCredential.user.email } as User;
-                }
-                
-                // Fallback if firestore doc doesn't exist
-                return { 
-                    email: userCredential.user.email || '', 
-                    name: userCredential.user.displayName || 'Farmer' 
-                } as User;
-            } catch (error) {
-                console.error("Login Error:", error);
-                throw error;
+            await delay(800); // Simulate network request
+            // In a real app, send POST /api/auth/login
+            // For demo, we just return the stored user or a mock one if credentials match 'demo' logic
+            const stored = localStorage.getItem(DB_KEYS.USER);
+            if (stored) {
+                const user = JSON.parse(stored);
+                if (user.email === email) return user;
             }
+            // Create a fresh mock user if none exists
+            const newUser: User = {
+                name: 'Arjun Farmer',
+                email,
+                location: 'Odisha, India',
+                phone: '+91 98765 43210',
+                memberSince: '2024',
+                farmSize: '5',
+                soilType: 'Clay',
+                mainCrop: 'Rice',
+                irrigationSource: 'Canal'
+            };
+            localStorage.setItem(DB_KEYS.USER, JSON.stringify(newUser));
+            return newUser;
         },
 
         async signup(user: User, password: string): Promise<User> {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, user.email, password);
-                
-                // Update Auth Profile Display Name
-                await updateAuthProfile(userCredential.user, {
-                    displayName: user.name
-                });
-
-                // Store extended user data in Firestore
-                const userData: User = {
-                    ...user,
-                    memberSince: new Date().getFullYear().toString()
-                };
-
-                await setDoc(doc(db, "users", userCredential.user.uid), userData);
-                return userData;
-            } catch (error) {
-                console.error("Signup Error:", error);
-                throw error;
-            }
+            await delay(1000);
+            // In a real app, send POST /api/auth/signup
+            localStorage.setItem(DB_KEYS.USER, JSON.stringify(user));
+            return user;
         },
 
         async logout(): Promise<void> {
-            await signOut(auth);
-            localStorage.removeItem('bhumi_user'); // Clean up any local fallbacks
+            await delay(200);
+            localStorage.removeItem(DB_KEYS.USER);
         },
 
-        getCurrentUser(): Promise<User | null> {
-            return new Promise((resolve) => {
-                const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-                    unsubscribe();
-                    if (firebaseUser) {
-                        try {
-                            const docRef = doc(db, "users", firebaseUser.uid);
-                            const docSnap = await getDoc(docRef);
-                            if (docSnap.exists()) {
-                                resolve(docSnap.data() as User);
-                            } else {
-                                resolve({ 
-                                    email: firebaseUser.email || '', 
-                                    name: firebaseUser.displayName || '' 
-                                } as User);
-                            }
-                        } catch (e) {
-                            console.error("Error fetching user profile:", e);
-                            resolve({ 
-                                email: firebaseUser.email || '', 
-                                name: firebaseUser.displayName || '' 
-                            } as User);
-                        }
-                    } else {
-                        resolve(null);
-                    }
-                });
-            });
+        async getCurrentUser(): Promise<User | null> {
+            // Check for session/token
+            const stored = localStorage.getItem(DB_KEYS.USER);
+            return stored ? JSON.parse(stored) : null;
         }
     },
 
     user: {
         async updateProfile(user: User): Promise<User> {
-            const currentUser = auth.currentUser;
-            if (!currentUser) throw new Error("No authenticated user");
-
-            try {
-                // Update Firestore
-                const userRef = doc(db, "users", currentUser.uid);
-                await updateDoc(userRef, { ...user });
-                
-                // Update Auth Profile if name changed
-                if (user.name !== currentUser.displayName) {
-                    await updateAuthProfile(currentUser, { displayName: user.name });
-                }
-                
-                return user;
-            } catch (error) {
-                console.error("Update Profile Error:", error);
-                throw error;
-            }
+            await delay(600); // Simulate server processing
+            localStorage.setItem(DB_KEYS.USER, JSON.stringify(user));
+            return user;
         }
     },
 
     // Example of extending for other features
     crops: {
         async getHistory(): Promise<any[]> {
-            // Placeholder for future Firestore crop history collection
+            await delay(500);
             return [];
         }
     }
