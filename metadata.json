@@ -1,0 +1,9 @@
+{
+  "name": "BHUMI: Smart Farming Assistant",
+  "description": "A production-grade agricultural platform powered by Gemini 3 Pro for disease detection, yield prediction, and smart farming advice.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
