@@ -1,12 +1,28 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { DiseaseResult, CropRec, YieldResult, AdvisoryResult, WeatherData } from "../types";
 
-const apiKey = process.env.API_KEY || '';
+// ROBUST KEY RETRIEVAL:
+// 1. Check process.env.API_KEY (Node/standard envs)
+// 2. Check import.meta.env.VITE_API_KEY (Vite/Production builds)
+// 3. Fallback to empty string (will cause error if used)
+const getApiKey = () => {
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_KEY) {
+        // @ts-ignore
+        return import.meta.env.VITE_API_KEY;
+    }
+    return process.env.API_KEY || '';
+};
+
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey });
 
 const MODEL_REASONING = 'gemini-3-pro-preview';
 const MODEL_VISION = 'gemini-3-pro-preview'; 
 const MODEL_FAST = 'gemini-2.5-flash';
+
+// Helper to check if key is present for UI indicators
+export const isConfigured = () => !!apiKey && apiKey.length > 0;
 
 const getLangName = (code: string) => {
     const map: Record<string, string> = {
@@ -17,7 +33,16 @@ const getLangName = (code: string) => {
     return map[code] || 'English';
 };
 
+// Helper to validate key existence before calls
+const checkApiKey = () => {
+    if (!apiKey) {
+        console.error("API Key is missing! Please set VITE_API_KEY or API_KEY in your environment variables.");
+        throw new Error("API Key missing. Please configure VITE_API_KEY in your .env file or deployment settings.");
+    }
+};
+
 export const analyzeCropDisease = async (base64Image: string, language: string): Promise<DiseaseResult> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Analyze this image of a crop. Identify if there is any disease. 
@@ -57,6 +82,7 @@ export const analyzeCropDisease = async (base64Image: string, language: string):
 };
 
 export const getCropRecommendations = async (soil: string, season: string, location: string, language: string): Promise<CropRec[]> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Suggest 3 suitable crops for: Soil=${soil}, Season=${season}, Location=${location}. 
@@ -93,6 +119,7 @@ export const getCropRecommendations = async (soil: string, season: string, locat
 };
 
 export const chatWithBhumi = async (history: {role: string, parts: {text: string}[]}[], message: string, language: string) => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const chat = ai.chats.create({
@@ -119,6 +146,7 @@ export const chatWithBhumi = async (history: {role: string, parts: {text: string
 
 // Simplified Agent for Voice interaction (Faster Model)
 export const voiceAgentChat = async (message: string) => {
+    if (!apiKey) return "Please configure your API Key to chat with Bhumi.";
     try {
         const chat = ai.chats.create({
             model: MODEL_FAST,
@@ -136,6 +164,7 @@ export const voiceAgentChat = async (message: string) => {
 };
 
 export const getYieldPrediction = async (data: any, language: string): Promise<YieldResult> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Act as an expert agronomist. Predict crop yield based on detailed inputs: 
@@ -171,6 +200,7 @@ export const getYieldPrediction = async (data: any, language: string): Promise<Y
 };
 
 export const getSmartAdvisory = async (data: any, language: string): Promise<AdvisoryResult> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Provide specific agricultural advice for:
@@ -202,6 +232,7 @@ export const getSmartAdvisory = async (data: any, language: string): Promise<Adv
 };
 
 export const getWeatherForecast = async (location: string, language: string): Promise<WeatherData> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Get current weather and 5-day forecast for ${location}. 
@@ -256,6 +287,7 @@ export const getWeatherForecast = async (location: string, language: string): Pr
 };
 
 export const getAnalyticsInsight = async (data: any, language: string): Promise<string> => {
+    checkApiKey();
     try {
         const langName = getLangName(language);
         const prompt = `Analyze this agricultural data and provide strategic insights in ${langName}.

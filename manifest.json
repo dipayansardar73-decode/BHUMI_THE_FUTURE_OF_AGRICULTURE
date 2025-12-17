@@ -1,0 +1,21 @@
+{
+  "short_name": "Bhumi",
+  "name": "Bhumi: Smart Farming Assistant",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2D5016",
+  "background_color": "#ffffff",
+  "orientation": "portrait"
+}

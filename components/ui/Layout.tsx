@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageView, User, Language } from '../../types';
 import { translations } from '../../utils/translations';
 import { 
@@ -16,7 +16,9 @@ import {
     Moon,
     Sun,
     FlaskConical,
-    Bug
+    Bug,
+    Download,
+    QrCode
 } from 'lucide-react';
 import { ChatWidget } from '../ChatWidget';
 
@@ -74,7 +76,27 @@ export const BhumiLogo = ({ size = 40 }: { size?: number }) => (
 
 export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, user, logout, lang, isDark, toggleTheme }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+    const [showQrModal, setShowQrModal] = useState(false);
     const t = translations[lang];
+
+    useEffect(() => {
+        const handler = (e: any) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            setDeferredPrompt(null);
+        }
+    };
 
     const navItems = [
         { id: 'dashboard', label: t.dashboard, icon: LayoutDashboard },
@@ -114,6 +136,16 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
                     ))}
                 </nav>
                 <div className="p-4 border-t border-gray-200 dark:border-white/10 space-y-2">
+                    {deferredPrompt && (
+                        <button onClick={handleInstallClick} className="w-full flex items-center space-x-3 px-4 py-3 bg-bhumi-green text-white rounded-xl transition-colors hover:bg-green-700 shadow-md">
+                            <Download size={20} />
+                            <span>Install App</span>
+                        </button>
+                    )}
+                    <button onClick={() => setShowQrModal(true)} className="w-full flex items-center space-x-3 px-4 py-3 text-bhumi-green dark:text-bhumi-gold hover:bg-green-50 dark:hover:bg-bhumi-gold/10 rounded-xl transition-colors font-medium">
+                        <QrCode size={20} />
+                        <span>Share App</span>
+                    </button>
                     <button onClick={toggleTheme} className="w-full flex items-center space-x-3 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl transition-colors">
                         {isDark ? <Sun size={20} /> : <Moon size={20} />}
                         <span>{isDark ? t.lightMode : t.darkMode}</span>
@@ -132,6 +164,14 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
                     <span className="font-bold text-xl text-bhumi-green dark:text-white tracking-wide">BHUMI</span>
                 </div>
                 <div className="flex items-center gap-2">
+                    {deferredPrompt && (
+                        <button onClick={handleInstallClick} className="p-2 text-bhumi-green dark:text-bhumi-gold rounded-full hover:bg-green-100 dark:hover:bg-white/10">
+                            <Download size={20} />
+                        </button>
+                    )}
+                    <button onClick={() => setShowQrModal(true)} className="p-2 text-bhumi-green dark:text-bhumi-gold rounded-full hover:bg-green-100 dark:hover:bg-white/10">
+                        <QrCode size={20} />
+                    </button>
                     <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-white rounded-full hover:bg-gray-100 dark:hover:bg-white/10">
                         {isDark ? <Sun size={20} /> : <Moon size={20} />}
                     </button>
@@ -162,7 +202,13 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
                                 <span className="font-medium text-lg">{item.label}</span>
                             </button>
                         ))}
-                        <button onClick={logout} className="w-full flex items-center space-x-3 px-4 py-4 mt-8 text-red-500 bg-red-500/10 rounded-xl border border-red-500/20">
+                         {deferredPrompt && (
+                            <button onClick={handleInstallClick} className="w-full flex items-center space-x-3 px-4 py-4 mt-8 bg-bhumi-green text-white rounded-xl shadow-lg">
+                                <Download size={22} />
+                                <span className="font-medium text-lg">Install Bhumi App</span>
+                            </button>
+                        )}
+                        <button onClick={logout} className="w-full flex items-center space-x-3 px-4 py-4 mt-4 text-red-500 bg-red-500/10 rounded-xl border border-red-500/20">
                             <LogOut size={22} />
                             <span className="font-medium text-lg">{t.logout}</span>
                         </button>
@@ -177,6 +223,53 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
 
             {/* Floating Chat Widget */}
             <ChatWidget lang={lang} />
+
+            {/* QR Code Modal for Judges/Sharing */}
+            {showQrModal && (
+                <div 
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in"
+                    onClick={() => setShowQrModal(false)}
+                >
+                    <div 
+                        className="bg-white dark:bg-[#0F1419] p-8 rounded-3xl flex flex-col items-center gap-6 max-w-sm w-full shadow-2xl border border-gray-200 dark:border-white/10 animate-scale-up" 
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className="text-center">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Scan to Run on Mobile</h3>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">
+                                Open your camera app and scan this code to launch Bhumi instantly.
+                            </p>
+                        </div>
+                        
+                        <div className="bg-white p-4 rounded-2xl shadow-inner border border-gray-100">
+                            {/* Uses a public QR code API to generate code for the current URL */}
+                            <img 
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(window.location.href)}`} 
+                                alt="App QR Code" 
+                                className="w-48 h-48 md:w-56 md:h-56 mix-blend-multiply" 
+                            />
+                        </div>
+
+                        <div className="flex gap-3 w-full">
+                            <button 
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.href);
+                                    alert("Link copied!");
+                                }}
+                                className="flex-1 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-white font-bold py-3 rounded-xl transition-colors"
+                            >
+                                Copy Link
+                            </button>
+                            <button 
+                                onClick={() => setShowQrModal(false)} 
+                                className="flex-1 bg-bhumi-green text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

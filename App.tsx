@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Layout, BhumiLogo } from './components/ui/Layout';
 import { Dashboard } from './pages/Dashboard';
@@ -13,7 +12,8 @@ import { Profile } from './pages/Profile';
 import { PageView, User, Language } from './types';
 import { translations } from './utils/translations';
 import { api } from './services/api';
-import { Languages, Mail, Lock, User as UserIcon, MapPin, ArrowRight, Sprout, Droplets, Layers } from 'lucide-react';
+import { isConfigured } from './services/geminiService';
+import { Languages, Mail, Lock, User as UserIcon, MapPin, ArrowRight, Sprout, Droplets, Layers, AlertTriangle } from 'lucide-react';
 
 const App: React.FC = () => {
     const [view, setView] = useState<PageView>('language');
@@ -22,6 +22,7 @@ const App: React.FC = () => {
     const [isDark, setIsDark] = useState(false);
     const [loading, setLoading] = useState(false);
     const [initialCheckDone, setInitialCheckDone] = useState(false);
+    const [apiKeyMissing, setApiKeyMissing] = useState(false);
 
     // Auth States
     const [authMode, setAuthMode] = useState<'login' | 'signup' | 'forgot'>('login');
@@ -42,6 +43,11 @@ const App: React.FC = () => {
     useEffect(() => {
         const initApp = async () => {
             try {
+                // Check if API key is present
+                if (!isConfigured()) {
+                    setApiKeyMissing(true);
+                }
+
                 const storedLang = localStorage.getItem('bhumi_lang') as Language;
                 if (storedLang) setLang(storedLang);
 
@@ -165,11 +171,21 @@ const App: React.FC = () => {
         );
     }
 
+    const ApiKeyBanner = () => (
+        apiKeyMissing ? (
+            <div className="bg-red-500 text-white text-xs md:text-sm font-bold text-center p-2 fixed top-0 w-full z-50 flex items-center justify-center gap-2 shadow-lg">
+                <AlertTriangle size={16} />
+                <span>Setup Required: Add <code>VITE_API_KEY</code> to your environment variables.</span>
+            </div>
+        ) : null
+    );
+
     // Language Selection Screen
     if (view === 'language') {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-white dark:bg-[#0F1419] transition-colors duration-500">
-                <div className="z-10 text-center space-y-8 animate-fade-in w-full max-w-4xl">
+                <ApiKeyBanner />
+                <div className="z-10 text-center space-y-8 animate-fade-in w-full max-w-4xl mt-6">
                     <div className="flex justify-center mb-6 animate-float">
                         <BhumiLogo size={120} />
                     </div>
@@ -212,7 +228,8 @@ const App: React.FC = () => {
     if (view === 'auth') {
         return (
             <div className="min-h-screen flex items-center justify-center p-4 relative bg-gray-50 dark:bg-[#0F1419] transition-colors duration-500">
-                <div className={`w-full ${authMode === 'signup' ? 'max-w-2xl' : 'max-w-md'} glass-panel p-8 rounded-3xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-2xl z-10 animate-slide-up`}>
+                <ApiKeyBanner />
+                <div className={`w-full ${authMode === 'signup' ? 'max-w-2xl' : 'max-w-md'} glass-panel p-8 rounded-3xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-2xl z-10 animate-slide-up mt-6`}>
                     <div className="text-center mb-8">
                         <div className="inline-block p-4 bg-gray-100 dark:bg-white/5 rounded-full mb-4 border border-gray-200 dark:border-white/10">
                             <BhumiLogo size={48} />
@@ -460,6 +477,7 @@ const App: React.FC = () => {
             isDark={isDark}
             toggleTheme={toggleTheme}
         >
+            <ApiKeyBanner />
             {renderPage()}
         </Layout>
     );
