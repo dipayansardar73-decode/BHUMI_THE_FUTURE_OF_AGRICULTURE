@@ -1,112 +1,88 @@
-# 🌱 BHUMI: Smart Farming Assistant
+# 🌾 Bhumi: Smart Farming Assistant
 
-> **Empowering farmers with Gemini 3 Pro Intelligence.**  
-> *Winner/Submission for [Hackathon Name]*
+**Democratizing Agricultural Intelligence with AI.**
 
-![Bhumi Banner](https://images.unsplash.com/photo-1625246333195-58197bd47d26?auto=format&fit=crop&q=80&w=1200)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-Bundler-purple)](https://vitejs.dev/)
+[![PWA](https://img.shields.io/badge/PWA-Enabled-green)](https://web.dev/progressive-web-apps/)
 
-## 📖 Overview
+**Bhumi** is a Progressive Web App (PWA) that acts as an **"AI Agronomist in your pocket."** Built for small-scale farmers, it breaks language and literacy barriers by providing real-time crop disease diagnosis, hyper-local farming advice, and market insights through intuitive voice and image interactions powered by Google's Gemini AI.
 
-**Bhumi** is a production-grade, offline-capable Progressive Web App (PWA) designed to bridge the technology gap for rural farmers. By leveraging the multimodal capabilities of **Google Gemini 3 Pro**, Bhumi provides real-time disease detection, crop recommendations, and personalized farming advisory in **9 native languages**.
-
-Unlike traditional apps that require complex backend infrastructure, Bhumi is architected as a **Serverless Client-Side AI Application**, making it zero-cost to host and incredibly fast.
+> **Vision**: Cultivating the future of agriculture by empowering farmers with technology to build more sustainable, resilient, and profitable businesses.
 
 ---
 
-## 🚀 Key Features
+## ✨ Key Features
 
-### 🤖 Powered by Google Gemini
-We utilize the full spectrum of the Gemini API:
-*   **Gemini 3 Pro (Vision):** Analyzing uploaded crop images to detect diseases (e.g., Blight, Rust) with confidence scores and treatment plans.
-*   **Gemini 3 Pro (Reasoning):** Complex logic for Yield Prediction and Crop Recommendations based on soil parameters.
-*   **Gemini 2.5 Flash:** Powering the **Real-time Voice Agent** for low-latency, conversational interactions.
-*   **Google Search Grounding:** Fetching real-time weather data and market news to ensure advice is current.
+### AI-Powered Disease Detection
+Upload a photo of a crop leaf or plant. Gemini 3 Pro analyzes the image to identify diseases/pests and provides a complete diagnosis with treatment (organic/chemical) and prevention steps.
 
-### 🌾 Core Functionalities
-1.  **📸 Instant Disease Detection:** Snap a photo of a crop, get instant diagnosis and cure.
-2.  **🗣️ Multilingual Voice Agent:** Talk to Bhumi in Hindi, Odia, Bengali, Spanish, and more.
-3.  **📊 Yield Prediction:** AI-driven forecasting of harvest quantity based on farm inputs.
-4.  **🌦️ Agro-Weather:** Hyper-local weather combined with agronomic advice (e.g., "Spray pesticides today as no rain is forecast").
-5.  **📉 Smart Analytics:** Visual dashboard for expenses, yield history, and market trends.
-6.  **🌍 Native Language Support:** Full UI translation for 9 languages.
+### Native Language Voice Agent (Bhumi Live)
+Speak naturally to the app in your local dialect (Hindi, Odia, Bengali, Spanish, Mandarin, etc.). Get conversational advice on weather, market prices, or pest control without ever touching your screen. Features true voice-to-voice interaction with regional accents.
+
+### Smart Advisory & Yield Prediction
+Input crop details, soil type, irrigation, and seed variety. Gemini's reasoning models run complex agronomic simulations to provide:
+- Personalized crop recommendations
+- Precision yield forecasts (e.g., "14.0 - 17.5 Tonnes for 5 Acres")
+- Expert agronomist suggestions for irrigation, fertilizer, and pest control
+
+### Analytics Hub
+Visualize your farm's performance across key metrics: annual yield trends, market price movements, and expense distribution. Generate strategic AI summaries of your data with one click.
+
+### Grounded in Reality
+AI uses the **Google Search Tool** to fetch live **market prices (Mandi rates)** and **real-time weather alerts**, ensuring advice is practical, timely, and trustworthy.
+
+### Installable PWA
+Works offline for basic functions and installs directly to your phone's home screen like a native app—no app store download required.
+
+---
+
+## 🚀 Live Test
+
+**Test the application directly in your browser:**
+👉 **[Live Bhumi Application](https://ai.studio.apps.drive/1vb5mhOsrY1MB02qq9fb5fE2W2nawBCQv?fullscreenApplet=true)**
+
+*Note: You may need to allow microphone access for voice features and camera access for disease detection.*
 
 ---
 
 ## 🛠️ Tech Stack
 
-*   **Frontend:** React 19, TypeScript, Vite
-*   **AI & Logic:** Google GenAI SDK (`@google/genai`)
-*   **Styling:** Tailwind CSS, Lucide Icons
-*   **Visualization:** Recharts
-*   **Architecture:** Serverless / Client-Side (Mock Backend via LocalStorage for demo)
-*   **Deployment:** Vercel / Render
+**Frontend & UI:**
+- **Framework:** React 19 with TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS (with Glassmorphism design)
+- **Icons:** Lucide React
+- **Charts:** Recharts
+
+**Artificial Intelligence:**
+- **SDK:** Google GenAI SDK (`@google/genai`)
+- **Vision & Reasoning:** `gemini-3-pro-preview` (Image analysis, complex agronomic logic)
+- **Conversation:** `gemini-2.5-flash` (Low-latency voice agent)
+- **Tools:** `googleSearch` (Live market/weather data grounding)
+
+**Browser APIs & PWA:**
+- **Speech Recognition & Synthesis:** Native browser APIs for voice interaction
+- **Geolocation:** For hyper-local weather and advisory
+- **Service Worker & Manifest:** Full PWA capabilities with offline support
+
+**Architecture:**
+- **Current:** Serverless/Client-side AI with mock backend using `localStorage`
+- **Planned:** Firebase (Authentication & Firestore)
 
 ---
 
-## ⚙️ Installation & Setup
-
-Bhumi is designed to be easy to run. You do not need a database.
+## 🔧 Local Development
 
 ### Prerequisites
-*   Node.js (v18+)
-*   A Google Gemini API Key
+- Node.js (v18 or later)
+- A **Google AI Studio API Key** (Get it free from [makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey))
 
-### Steps
+### Installation
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/yourusername/bhumi.git
-    cd bhumi
-    ```
-
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Configure API Key**
-    Create a `.env` file in the root directory:
-    ```env
-    VITE_API_KEY=your_gemini_api_key_here
-    ```
-
-4.  **Run Locally**
-    ```bash
-    npm run dev
-    ```
-    Open `http://localhost:5173` in your browser.
-
----
-
-## 🏗️ Architecture Note
-
-To ensure high availability and zero maintenance costs for farmers, Bhumi uses a **"Mock Backend"** pattern for this hackathon prototype:
-*   **User Data:** Stored securely in the browser's `LocalStorage`.
-*   **Authentication:** Simulated for instant access (judges can login immediately).
-*   **AI Calls:** Direct secure calls from Client to Google Gemini API.
-
-*Note: A Firebase configuration file is included in `services/firebase.ts` for future scalability to a cloud database.*
-
----
-
-## 📱 Screenshots
-
-| Dashboard | Disease Detection |
-|-----------|-------------------|
-| *[Add Screenshot]* | *[Add Screenshot]* |
-
-| Yield Prediction | Voice Agent |
-|------------------|-------------|
-| *[Add Screenshot]* | *[Add Screenshot]* |
-
----
-
-## 🔮 Future Roadmap
-
-*   [ ] Integration with IoT Soil Sensors.
-*   [ ] Community Marketplace for farmers to sell directly.
-*   [ ] Offline-first AI models (Gemini Nano) for remote areas without internet.
-
----
-
-Made with ❤️ by [Your Name/Team Name]
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE.git
+   cd BHUMI_THE_FUTURE_OF_AGRICULTURE
