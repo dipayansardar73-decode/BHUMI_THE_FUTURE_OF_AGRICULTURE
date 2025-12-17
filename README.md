@@ -177,18 +177,19 @@ The optimized files will be in the dist/ folder, ready for deployment.
 
 **Real-Time Grounding:** Integrates live web data with AI reasoning
 
-🔮 Roadmap
-IoT Integration: Connect with soil moisture & NPK sensors (Arduino/ESP32)
+**🔮 Roadmap**
 
-Community Marketplace: Peer-to-peer platform for selling produce and renting equipment
+**IoT Integration:** Connect with soil moisture & NPK sensors (Arduino/ESP32)
 
-Government Scheme Assistant: Automated matching with agricultural subsidies
+**Community Marketplace:** Peer-to-peer platform for selling produce and renting equipment
 
-Expanded Language Support: Additional regional languages and dialects
+**Government Scheme Assistant:** Automated matching with agricultural subsidies
 
-Backend Integration: Firebase for authentication and data persistence
+**Expanded Language Support:** Additional regional languages and dialects
 
-🤝 Contributing
+**Backend Integration:** Firebase for authentication and data persistence
+
+**🤝 Contributing**
 We welcome contributions to enhance Bhumi's capabilities for farmers worldwide!
 
 Fork the Project
@@ -203,24 +204,24 @@ Open a Pull Request
 
 Please ensure your code follows the existing style and includes appropriate documentation.
 
-📄 License
+**📄 License**
 Distributed under the MIT License. See LICENSE for more information.
 
-👥 Team
+**👥 Team**
 Project Lead & Developer:
 
-Dipayan Sardar - dipayansardar73@gmail.com
+**Dipayan Sardar** - dipayansardar73@gmail.com
 
-Acknowledgments
+**Acknowledgments**
 Google for the Gemini API
 
 The open-source community for React, Vite, Tailwind CSS, and other libraries
 
 Farmers worldwide who inspire this work
 
-📬 Contact
+**📬 Contact**
 GitHub Repository: https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE
 
-Contact Email: dipayansardar73@gmail.com
+**Contact Email:** dipayansardar73@gmail.com
 
 
