@@ -89,9 +89,9 @@ Works offline for basic functions and installs directly to your phone's home scr
    Install dependencies:
 2. **Install dependencies:**
 npm install
-# or
+or
 yarn install
-# or
+or
 pnpm install
 
 3. **Configure Environment Variables:**
@@ -112,43 +112,69 @@ The optimized files will be in the dist/ folder, ready for deployment.
 **🔧 Core AI Implementations**
 
 **Disease Detection Pipeline**
+
 1.User uploads crop image
+
 2.Image sent to Gemini 3 Pro with structured prompt
+
 3.AI returns JSON with disease identification, confidence score, and treatment plan
+
 4.Response displayed in user's preferred language
 
 **Yield Prediction Engine**
+
 1.Farmer inputs 7+ parameters (soil type, irrigation method, seed variety, acreage, etc.)
+
 2.Gemini 3 Pro performs agronomic simulation based on training data
+
 3.Returns precise yield range with influencing factors and expert suggestions
+
 4.All calculations performed client-side for privacy
 
 **Voice Interaction System**
+
 1.Browser SpeechRecognition captures audio in native language
+
 2.Text sent to Gemini 2.5 Flash for low-latency processing
+
 3.AI responds in same language with agricultural advice
+
 4.Browser Text-to-Speech delivers response with regional accent
 
 **Real-Time Data Integration**
+
 1.User queries about market prices or weather
+
 2.Gemini uses googleSearch tool to fetch current data
+
 3.AI synthesizes search results with contextual advice
+
 4.Grounded information delivered to farmer
 
 **🌍 Impact & Innovation**
+
 **Economic Impact**
+
 1.**Yield Increase**: Early disease detection can save up to 20% of harvest
+
 2.**Cost Reduction**: Prevents overuse of fertilizers and pesticides
+
 3.**Market Awareness**: Real-time price analysis for better selling decisions
 
 **Social Innovation**
+
 1.**9+ Languages Deeply Integrated**: AI generates responses natively in the user's chosen language
+
 2.**Voice-First Design**: Hands-free operation suitable for field use
+
 3.**Accessibility**: No English requirement or complex forms
 
 **Technical Innovation**
+
 **Client-Side AI Architecture:** Fast, privacy-focused, cost-effective hosting
+
 **Multimodal Processing:** Combines image analysis with reasoning capabilities
+
 **Real-Time Grounding:** Integrates live web data with AI reasoning
 
 🔮 Roadmap
