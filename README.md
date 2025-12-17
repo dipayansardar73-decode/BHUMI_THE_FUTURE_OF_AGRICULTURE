@@ -86,3 +86,134 @@ Works offline for basic functions and installs directly to your phone's home scr
    ```bash
    git clone https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE.git
    cd BHUMI_THE_FUTURE_OF_AGRICULTURE
+   Install dependencies:
+
+bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+Configure Environment Variables:
+Create a .env.local file in the root directory:
+
+env
+VITE_GEMINI_API_KEY=your_actual_api_key_here
+Start the development server:
+
+bash
+npm run dev
+The app will open at http://localhost:5173
+
+Build for Production:
+
+bash
+npm run build
+The optimized files will be in the dist/ folder, ready for deployment.
+
+🔧 Core AI Implementations
+Disease Detection Pipeline
+User uploads crop image
+
+Image sent to Gemini 3 Pro with structured prompt
+
+AI returns JSON with disease identification, confidence score, and treatment plan
+
+Response displayed in user's preferred language
+
+Yield Prediction Engine
+Farmer inputs 7+ parameters (soil type, irrigation method, seed variety, acreage, etc.)
+
+Gemini 3 Pro performs agronomic simulation based on training data
+
+Returns precise yield range with influencing factors and expert suggestions
+
+All calculations performed client-side for privacy
+
+Voice Interaction System
+Browser SpeechRecognition captures audio in native language
+
+Text sent to Gemini 2.5 Flash for low-latency processing
+
+AI responds in same language with agricultural advice
+
+Browser Text-to-Speech delivers response with regional accent
+
+Real-Time Data Integration
+User queries about market prices or weather
+
+Gemini uses googleSearch tool to fetch current data
+
+AI synthesizes search results with contextual advice
+
+Grounded information delivered to farmer
+
+🌍 Impact & Innovation
+Economic Impact
+Yield Increase: Early disease detection can save up to 20% of harvest
+
+Cost Reduction: Prevents overuse of fertilizers and pesticides
+
+Market Awareness: Real-time price analysis for better selling decisions
+
+Social Innovation
+9+ Languages Deeply Integrated: AI generates responses natively in the user's chosen language
+
+Voice-First Design: Hands-free operation suitable for field use
+
+Accessibility: No English requirement or complex forms
+
+Technical Innovation
+Client-Side AI Architecture: Fast, privacy-focused, cost-effective hosting
+
+Multimodal Processing: Combines image analysis with reasoning capabilities
+
+Real-Time Grounding: Integrates live web data with AI reasoning
+
+🔮 Roadmap
+IoT Integration: Connect with soil moisture & NPK sensors (Arduino/ESP32)
+
+Community Marketplace: Peer-to-peer platform for selling produce and renting equipment
+
+Government Scheme Assistant: Automated matching with agricultural subsidies
+
+Expanded Language Support: Additional regional languages and dialects
+
+Backend Integration: Firebase for authentication and data persistence
+
+🤝 Contributing
+We welcome contributions to enhance Bhumi's capabilities for farmers worldwide!
+
+Fork the Project
+
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
+
+Commit your Changes (git commit -m 'Add some AmazingFeature')
+
+Push to the Branch (git push origin feature/AmazingFeature)
+
+Open a Pull Request
+
+Please ensure your code follows the existing style and includes appropriate documentation.
+
+📄 License
+Distributed under the MIT License. See LICENSE for more information.
+
+👥 Team
+Project Lead & Developer:
+
+Dipayan Sardar - dipayansardar73@gmail.com
+
+Acknowledgments
+Google for the Gemini API
+
+The open-source community for React, Vite, Tailwind CSS, and other libraries
+
+Farmers worldwide who inspire this work
+
+📬 Contact
+GitHub Repository: https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE
+
+Contact Email: dipayansardar73@gmail.com
+
+
