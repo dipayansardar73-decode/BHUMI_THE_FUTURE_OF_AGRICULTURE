@@ -1,9 +1,6 @@
 # 🌱 BHUMI: Smart Farming Assistant
 
 > **Empowering farmers with Gemini 3 Pro Intelligence.**  
-> *Winner/Submission for [Hackathon Name]*
-
-![Bhumi Banner](https://images.unsplash.com/photo-1625246333195-58197bd47d26?auto=format&fit=crop&q=80&w=1200)
 
 ## 📖 Overview
 
@@ -89,17 +86,7 @@ To ensure high availability and zero maintenance costs for farmers, Bhumi uses a
 
 ---
 
-## 📱 Screenshots
 
-| Dashboard | Disease Detection |
-|-----------|-------------------|
-| *[Add Screenshot]* | *[Add Screenshot]* |
-
-| Yield Prediction | Voice Agent |
-|------------------|-------------|
-| *[Add Screenshot]* | *[Add Screenshot]* |
-
----
 
 ## 🔮 Future Roadmap
 
