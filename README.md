@@ -192,15 +192,18 @@ The optimized files will be in the dist/ folder, ready for deployment.
 **🤝 Contributing**
 We welcome contributions to enhance Bhumi's capabilities for farmers worldwide!
 
-Fork the Project
+1.**Fork the Project**
 
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
+2.**Create your Feature Branch**
+(git checkout -b feature/AmazingFeature)
 
-Commit your Changes (git commit -m 'Add some AmazingFeature')
+3.**Commit your Changes**
+(git commit -m 'Add some AmazingFeature')
 
-Push to the Branch (git push origin feature/AmazingFeature)
+4.**Push to the Branch**
+(git push origin feature/AmazingFeature)
 
-Open a Pull Request
+5.**Open a Pull Request**
 
 Please ensure your code follows the existing style and includes appropriate documentation.
 
@@ -213,11 +216,11 @@ Project Lead & Developer:
 **Dipayan Sardar** - dipayansardar73@gmail.com
 
 **Acknowledgments**
-Google for the Gemini API
+1.Google for the Gemini API
 
-The open-source community for React, Vite, Tailwind CSS, and other libraries
+2.The open-source community for React, Vite, Tailwind CSS, and other libraries
 
-Farmers worldwide who inspire this work
+3.Farmers worldwide who inspire this work
 
 **📬 Contact**
 GitHub Repository: https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE
