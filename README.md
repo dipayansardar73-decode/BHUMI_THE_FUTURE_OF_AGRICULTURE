@@ -42,7 +42,7 @@ Works offline for basic functions and installs directly to your phone's home scr
 ## 🚀 Live Test
 
 **Test the application directly in your browser:**
-👉 **[Live Bhumi Application](https://ai.studio.apps.drive/1vb5mhOsrY1MB02qq9fb5fE2W2nawBCQv?fullscreenApplet=true)**
+👉 **[Live Bhumi Application](https://ai.studio/apps/drive/1vb5mhOsrY1MB02qq9fb5fE2W2nawBCQv?fullscreenApplet=true)**
 
 *Note: You may need to allow microphone access for voice features and camera access for disease detection.*
 
