@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { PageView, User, Language } from '../../types';
 import { translations } from '../../utils/translations';
@@ -18,9 +19,13 @@ import {
     FlaskConical,
     Bug,
     Download,
-    QrCode
+    QrCode,
+    Copy,
+    Check
 } from 'lucide-react';
 import { ChatWidget } from '../ChatWidget';
+
+const APP_SHARE_URL = "https://ai.studio/apps/drive/1vb5mhOsrY1MB02qq9fb5fE2W2nawBCQv?fullscreenApplet=true";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -78,6 +83,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showQrModal, setShowQrModal] = useState(false);
+    const [copied, setCopied] = useState(false);
     const t = translations[lang];
 
     useEffect(() => {
@@ -96,6 +102,12 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
         if (outcome === 'accepted') {
             setDeferredPrompt(null);
         }
+    };
+
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(APP_SHARE_URL);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
     const navItems = [
@@ -224,7 +236,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
             {/* Floating Chat Widget */}
             <ChatWidget lang={lang} />
 
-            {/* QR Code Modal for Judges/Sharing */}
+            {/* QR Code Modal for Sharing */}
             {showQrModal && (
                 <div 
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in"
@@ -235,34 +247,36 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
                         onClick={e => e.stopPropagation()}
                     >
                         <div className="text-center">
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Scan to Run on Mobile</h3>
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Share Bhumi App</h3>
                             <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                Open your camera app and scan this code to launch Bhumi instantly.
+                                Scan the code below or copy the link to share Bhumi with other farmers.
                             </p>
                         </div>
                         
-                        <div className="bg-white p-4 rounded-2xl shadow-inner border border-gray-100">
-                            {/* Uses a public QR code API to generate code for the current URL */}
+                        <div className="bg-white p-6 rounded-3xl shadow-xl border-4 border-bhumi-green/20">
+                            {/* Improved QR code display for better scanner detection */}
                             <img 
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(window.location.href)}`} 
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(APP_SHARE_URL)}&bgcolor=ffffff&color=2D5016`} 
                                 alt="App QR Code" 
-                                className="w-48 h-48 md:w-56 md:h-56 mix-blend-multiply" 
+                                className="w-48 h-48 md:w-64 md:h-64 object-contain" 
                             />
                         </div>
 
                         <div className="flex gap-3 w-full">
                             <button 
-                                onClick={() => {
-                                    navigator.clipboard.writeText(window.location.href);
-                                    alert("Link copied!");
-                                }}
-                                className="flex-1 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-white font-bold py-3 rounded-xl transition-colors"
+                                onClick={handleCopyLink}
+                                className={`flex-1 flex items-center justify-center gap-2 font-bold py-3 rounded-xl transition-all border shadow-sm ${
+                                    copied 
+                                    ? 'bg-green-100 border-green-500 text-green-700' 
+                                    : 'bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-white/10'
+                                }`}
                             >
-                                Copy Link
+                                {copied ? <Check size={18} /> : <Copy size={18} />}
+                                {copied ? 'Copied!' : 'Copy Link'}
                             </button>
                             <button 
                                 onClick={() => setShowQrModal(false)} 
-                                className="flex-1 bg-bhumi-green text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors"
+                                className="flex-1 bg-bhumi-green text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-colors shadow-lg"
                             >
                                 Close
                             </button>

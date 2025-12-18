@@ -19,7 +19,7 @@ const ai = new GoogleGenAI({ apiKey });
 
 const MODEL_REASONING = 'gemini-3-pro-preview';
 const MODEL_VISION = 'gemini-3-pro-preview'; 
-const MODEL_FAST = 'gemini-2.5-flash';
+const MODEL_FAST = 'gemini-3-flash-preview';
 
 // Helper to check if key is present for UI indicators
 export const isConfigured = () => !!apiKey && apiKey.length > 0;

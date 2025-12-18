@@ -2,8 +2,8 @@
 
 **Democratizing Agricultural Intelligence with AI.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
+[![License: MIT](https://img.tailwindcss.com/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-Bundler-purple)](https://vitejs.dev/)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-green)](https://web.dev/progressive-web-apps/)
@@ -51,7 +51,7 @@ Works offline for basic functions and installs directly to your phone's home scr
 ## 🛠️ Tech Stack
 
 **Frontend & UI:**
-- **Framework:** React 19 with TypeScript
+- **Framework:** React 18/19 with TypeScript
 - **Build Tool:** Vite
 - **Styling:** Tailwind CSS (with Glassmorphism design)
 - **Icons:** Lucide React
@@ -60,7 +60,7 @@ Works offline for basic functions and installs directly to your phone's home scr
 **Artificial Intelligence:**
 - **SDK:** Google GenAI SDK (`@google/genai`)
 - **Vision & Reasoning:** `gemini-3-pro-preview` (Image analysis, complex agronomic logic)
-- **Conversation:** `gemini-2.5-flash` (Low-latency voice agent)
+- **Conversation:** `gemini-3-flash-preview` (Low-latency voice agent)
 - **Tools:** `googleSearch` (Live market/weather data grounding)
 
 **Browser APIs & PWA:**
@@ -68,17 +68,13 @@ Works offline for basic functions and installs directly to your phone's home scr
 - **Geolocation:** For hyper-local weather and advisory
 - **Service Worker & Manifest:** Full PWA capabilities with offline support
 
-**Architecture:**
-- **Current:** Serverless/Client-side AI with mock backend using `localStorage`
-- **Planned:** Firebase (Authentication & Firestore)
-
 ---
 
 ## 🔧 Local Development
 
 ### Prerequisites
 - Node.js (v18 or later)
-- A **Google AI Studio API Key** (Get it free from [makersuite.google.com/app/apikey](https://makersuite.google.com/app/apikey))
+- A **Google AI Studio API Key**
 
 ### Installation
 
@@ -86,145 +82,42 @@ Works offline for basic functions and installs directly to your phone's home scr
    ```bash
    git clone https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE.git
    cd BHUMI_THE_FUTURE_OF_AGRICULTURE
-   Install dependencies:
+   ```
+
 2. **Install dependencies:**
-npm install
-or
-yarn install
-or
-pnpm install
+   ```bash
+   npm install
+   ```
 
 3. **Configure Environment Variables:**
-Create a .env.local file in the root directory:
-
-VITE_GEMINI_API_KEY=your_actual_api_key_here
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_API_KEY=your_actual_api_key_here
+   ```
 
 4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-npm run dev
-The app will open at http://localhost:5173
+---
 
-5. **Build for Production:**
-
-npm run build
-The optimized files will be in the dist/ folder, ready for deployment.
-
-**🔧 Core AI Implementations**
-
-**Disease Detection Pipeline**
-
-1.User uploads crop image
-
-2.Image sent to Gemini 3 Pro with structured prompt
-
-3.AI returns JSON with disease identification, confidence score, and treatment plan
-
-4.Response displayed in user's preferred language
-
-**Yield Prediction Engine**
-
-1.Farmer inputs 7+ parameters (soil type, irrigation method, seed variety, acreage, etc.)
-
-2.Gemini 3 Pro performs agronomic simulation based on training data
-
-3.Returns precise yield range with influencing factors and expert suggestions
-
-4.All calculations performed client-side for privacy
-
-**Voice Interaction System**
-
-1.Browser SpeechRecognition captures audio in native language
-
-2.Text sent to Gemini 2.5 Flash for low-latency processing
-
-3.AI responds in same language with agricultural advice
-
-4.Browser Text-to-Speech delivers response with regional accent
-
-**Real-Time Data Integration**
-
-1.User queries about market prices or weather
-
-2.Gemini uses googleSearch tool to fetch current data
-
-3.AI synthesizes search results with contextual advice
-
-4.Grounded information delivered to farmer
-
-**🌍 Impact & Innovation**
+## 🌍 Impact & Innovation
 
 **Economic Impact**
-
-1.**Yield Increase**: Early disease detection can save up to 20% of harvest
-
-2.**Cost Reduction**: Prevents overuse of fertilizers and pesticides
-
-3.**Market Awareness**: Real-time price analysis for better selling decisions
+1. **Yield Increase**: Early disease detection can save up to 20% of harvest.
+2. **Cost Reduction**: Prevents overuse of fertilizers and pesticides.
+3. **Market Awareness**: Real-time price analysis for better selling decisions.
 
 **Social Innovation**
+1. **9+ Languages Deeply Integrated**: AI generates responses natively in the user's chosen language.
+2. **Voice-First Design**: Hands-free operation suitable for field use.
+3. **Accessibility**: No English requirement or complex forms.
 
-1.**9+ Languages Deeply Integrated**: AI generates responses natively in the user's chosen language
+---
 
-2.**Voice-First Design**: Hands-free operation suitable for field use
+## 📄 License
+Distributed under the MIT License.
 
-3.**Accessibility**: No English requirement or complex forms
-
-**Technical Innovation**
-
-**Client-Side AI Architecture:** Fast, privacy-focused, cost-effective hosting
-
-**Multimodal Processing:** Combines image analysis with reasoning capabilities
-
-**Real-Time Grounding:** Integrates live web data with AI reasoning
-
-**🔮 Roadmap**
-
-**IoT Integration:** Connect with soil moisture & NPK sensors (Arduino/ESP32)
-
-**Community Marketplace:** Peer-to-peer platform for selling produce and renting equipment
-
-**Government Scheme Assistant:** Automated matching with agricultural subsidies
-
-**Expanded Language Support:** Additional regional languages and dialects
-
-**Backend Integration:** Firebase for authentication and data persistence
-
-**🤝 Contributing**
-We welcome contributions to enhance Bhumi's capabilities for farmers worldwide!
-
-1.**Fork the Project**
-
-2.**Create your Feature Branch**
-(git checkout -b feature/AmazingFeature)
-
-3.**Commit your Changes**
-(git commit -m 'Add some AmazingFeature')
-
-4.**Push to the Branch**
-(git push origin feature/AmazingFeature)
-
-5.**Open a Pull Request**
-
-Please ensure your code follows the existing style and includes appropriate documentation.
-
-**📄 License**
-Distributed under the MIT License. See LICENSE for more information.
-
-**👥 Team**
-Project Lead & Developer:
-
+**Project Lead & Developer:**
 **Dipayan Sardar** - dipayansardar73@gmail.com
-
-**Acknowledgments**
-1.Google for the Gemini API
-
-2.The open-source community for React, Vite, Tailwind CSS, and other libraries
-
-3.Farmers worldwide who inspire this work
-
-**📬 Contact**
-GitHub Repository: https://github.com/dipayansardar73-decode/BHUMI_THE_FUTURE_OF_AGRICULTURE
-
-**Contact Email:** dipayansardar73@gmail.com
-
-
