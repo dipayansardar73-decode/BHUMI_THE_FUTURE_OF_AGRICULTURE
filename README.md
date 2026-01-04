@@ -1,8 +1,9 @@
 # 🌾 Bhumi: Smart Farming Assistant
+## Made By : Dipayan Sardar
 
 **Democratizing Agricultural Intelligence with AI.**
 
-[![License: MIT](https://img.tailwindcss.com/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT] (https://img.tailwindcss.com/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-Bundler-purple)](https://vitejs.dev/)
